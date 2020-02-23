@@ -114,6 +114,7 @@ int init_monitor(int argc, char *argv[]) {
   init_log();
 
   /* Test the implementation of the `CPU_state' structure. */
+  /* 生成一些随机数据，对寄存器实现的正确性进行检测 */
   reg_test();
 
 #ifdef DIFF_TEST
