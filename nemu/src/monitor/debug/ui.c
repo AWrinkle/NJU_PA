@@ -58,6 +58,11 @@ static int cmd_si(char *args)
       }
       */
       n=atoi(args);
+      if(n==0)
+      {
+        printf("excute no instruction");
+        return 0;
+      }
    }
    cpu_exec(n);
    return 0;
