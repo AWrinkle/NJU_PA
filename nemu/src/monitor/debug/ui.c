@@ -38,6 +38,31 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+//调试器添加的功能
+static int cmd_si(char *args)
+{
+   int64_t n=1;
+   //如果args非空，将其转化为数字
+   if(strlen(args)>0)
+   {
+      /*
+      n=0;
+      int i;
+      int digit=1;
+      for(i=0;i<strlen(args);i++)
+      {
+         if(args[i]<'0'||args[i]>'9')
+         return 0;
+         n=n*digit+int(args[i]-'0');
+         digit=digit*10;
+      }
+      */
+      n=atoi(args);
+   }
+   cpu_exec(n);
+   return 0;
+}
+
 static struct {
   char *name;
   char *description;
@@ -48,7 +73,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-
+  {"si","pause after excuting N instruction", cmd_si },
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -77,22 +102,24 @@ static int cmd_help(char *args) {
 }
 
 void ui_mainloop(int is_batch_mode) {
+  //先判断是不是批处理模式
   if (is_batch_mode) {
     cmd_c(NULL);
     return;
   }
 
   while (1) {
-    char *str = rl_gets();
+    char *str = rl_gets();//读一条string，返回首字符指针
     char *str_end = str + strlen(str);
 
     /* extract the first token as the command */
-    char *cmd = strtok(str, " ");
+    char *cmd = strtok(str, " ");//以空格对字符串进行分割，返回第一个分割的子字符串
     if (cmd == NULL) { continue; }
 
     /* treat the remaining string as the arguments,
      * which may need further parsing
      */
+    //检测分割后是否有两个以上的字符串
     char *args = cmd + strlen(cmd) + 1;
     if (args >= str_end) {
       args = NULL;
