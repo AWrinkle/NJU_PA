@@ -70,11 +70,23 @@ static int cmd_info(char *args)
       if(strlen(args)==1&&args[0]=='r')
       {
          int i;
+         //32
          for(i=0;i<8;i++)
          {
            printf("%s  0x%x\n",regsl[i],reg_l(i));
          }
-         
+         //eip
+         printf("eip  0x%x\n",cpu.eip);
+         //16
+         for(i=0;i<8;i++)
+         {
+           printf("%s  0x%x\n",regsw[i],reg_w(i));
+         }
+         //8
+         for(i=0;i<8;i++)
+         {
+           printf("%s  0x%x\n",regsb[i],reg_b(i));
+         }
       }
       return 0;
    }
