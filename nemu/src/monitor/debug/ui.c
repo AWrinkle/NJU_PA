@@ -41,9 +41,9 @@ static int cmd_help(char *args);
 //调试器添加的功能
 static int cmd_si(char *args)
 {
-   int64_t n=1;
+   uint64_t n=1;
    //如果args非空，将其转化为数字
-   if(strlen(args)>0)
+   if(args!=NULL)
    {
       /*
       n=0;
