@@ -69,9 +69,12 @@ static int cmd_info(char *args)
    {
       if(strlen(args)==1&&args[0]=='r')
       {
-         printf("%s\n",regsl[0]);
-         printf("%x",reg_l(0));
-         return 0;
+         int i;
+         for(i=0;i<8;i++)
+         {
+           printf("%s  ",regsl[i]);
+           printf("0x%x\n",reg_l(i));
+         }
       }
       return 0;
    }
