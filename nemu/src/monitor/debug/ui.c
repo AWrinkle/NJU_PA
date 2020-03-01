@@ -72,9 +72,9 @@ static int cmd_info(char *args)
          int i;
          for(i=0;i<8;i++)
          {
-           printf("%s  ",regsl[i]);
-           printf("0x%x\n",reg_l(i));
+           printf("%s  0x%x\n",regsl[i],reg_l(i));
          }
+         
       }
       return 0;
    }
