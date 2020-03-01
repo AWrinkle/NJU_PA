@@ -80,12 +80,12 @@ static int cmd_info(char *args)
          //16
          for(i=0;i<8;i++)
          {
-           printf("%s  0x%x\n",regsw[i],reg_w(i));
+           printf("%s   0x%x\n",regsw[i],reg_w(i));
          }
          //8
          for(i=0;i<8;i++)
          {
-           printf("%s  0x%x\n",regsb[i],reg_b(i));
+           printf("%s   0x%x\n",regsb[i],reg_b(i));
          }
       }
       return 0;
