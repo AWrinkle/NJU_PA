@@ -60,7 +60,7 @@ static int cmd_si(char *args)
       n=atoi(args);
       if(n==0)
       {
-        printf("excute no instruction");
+        printf("excute no instruction\n");
         return 0;
       }
    }
