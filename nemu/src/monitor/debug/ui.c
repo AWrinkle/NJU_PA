@@ -2,6 +2,7 @@
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
 #include "nemu.h"
+#include "cpu/reg.h"
 
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -45,19 +46,8 @@ static int cmd_si(char *args)
    //如果args非空，将其转化为数字
    if(args!=NULL)
    {
-      /*
-      n=0;
-      int i;
-      int digit=1;
-      for(i=0;i<strlen(args);i++)
-      {
-         if(args[i]<'0'||args[i]>'9')
-         return 0;
-         n=n*digit+int(args[i]-'0');
-         digit=digit*10;
-      }
-      */
       n=atoi(args);
+      //args非数字或n=0时
       if(n==0)
       {
         printf("excute no instruction\n");
@@ -66,6 +56,25 @@ static int cmd_si(char *args)
    }
    cpu_exec(n);
    return 0;
+}
+
+static int cmd_info(char *args)
+{
+   if(args==NULL)
+   {
+      printf("input more specific instruction\n");
+      return 0;  
+   }
+   else
+   {
+      if(strlen(args)==1&&args[0]=='r')
+      {
+         printf("%s\n",regsl[0]);
+         printf("%x",reg_l(0));
+         return 0;
+      }
+      return 0;
+   }
 }
 
 static struct {
@@ -79,6 +88,7 @@ static struct {
 
   /* TODO: Add more commands */
   {"si","pause after excuting N instruction", cmd_si },
+  {"info","print information about register or watchpoint",cmd_info},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
