@@ -5,14 +5,14 @@
  */
 #include <sys/types.h>
 #include <regex.h>
-
+//枚举类型第一个值确定后，后续依次递增
 enum {
   TK_NOTYPE = 256, TK_EQ
 
   /* TODO: Add more token types */
 
 };
-
+//单个字符就用ASCII码
 static struct rule {
   char *regex;
   int token_type;
@@ -22,18 +22,20 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
 
-  {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
+  {" +", TK_NOTYPE},    // spaces 闭包
+  {"\\+", '+'},         // plus 第一次转义\,第二次转义+
   {"==", TK_EQ}         // equal
 };
 
-#define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
+#define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )//正则表达式个数
 
 static regex_t re[NR_REGEX];
+//regex_t是一个结构体数据结构，用来存放编译后的正则表达式
 
 /* Rules are used for many times.
  * Therefore we compile them only once before any usage.
  */
+//初始化正则表达式
 void init_regex() {
   int i;
   char error_msg[128];
@@ -77,6 +79,7 @@ static bool make_token(char *e) {
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
+         * 末尾加\0
          */
 
         switch (rules[i].token_type) {

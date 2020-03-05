@@ -88,8 +88,19 @@ static int cmd_info(char *args)
            printf("%s   0x%x\n",regsb[i],reg_b(i));
          }
       }
+      /*
+      else if(strlen(args)==1&&args[0]=='w')
+      {
+         
+      }
+      */
       return 0;
    }
+}
+
+static int cmd_p(char *args)
+{
+   return 0;
 }
 
 static struct {
@@ -104,6 +115,7 @@ static struct {
   /* TODO: Add more commands */
   {"si","pause after excuting N instruction", cmd_si },
   {"info","print information about register or watchpoint",cmd_info},
+  {"p","calculate the result of expression",cmd_p},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
