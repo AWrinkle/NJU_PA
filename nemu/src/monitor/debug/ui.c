@@ -100,6 +100,8 @@ static int cmd_info(char *args)
 
 static int cmd_p(char *args)
 {
+   bool a;
+   expr(args,&a);
    return 0;
 }
 

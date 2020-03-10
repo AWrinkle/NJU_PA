@@ -1,5 +1,5 @@
 #include "nemu.h"
-
+#include <stdlib.h>
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -24,7 +24,10 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces 闭包
   {"\\+", '+'},         // plus 第一次转义\,第二次转义+
-  {"==", TK_EQ}         // equal
+  {"==", TK_EQ},         // equal
+  {"-",'-'},
+  {"\\*",'*'},
+  {"\\/",'/'}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )//正则表达式个数
@@ -42,6 +45,7 @@ void init_regex() {
   int ret;
 
   for (i = 0; i < NR_REGEX; i ++) {
+    //编译正则表达式，编译成功返回0
     ret = regcomp(&re[i], rules[i].regex, REG_EXTENDED);
     if (ret != 0) {
       regerror(ret, &re[i], error_msg, 128);
@@ -81,11 +85,29 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          * 末尾加\0
          */
-
+        strncpy(tokens[nr_token].str,substr_start,substr_len);
         switch (rules[i].token_type) {
+          case TK_NOTYPE:
+             tokens[nr_token].type=1;
+             break;
+          case '+':
+             tokens[nr_token].type=2;
+             break;
+          case TK_EQ:
+             tokens[nr_token].type=3;
+             break;
+          case '-':
+             tokens[nr_token].type=2;
+             break;
+          case '*':
+             tokens[nr_token].type=4;
+             break;
+          case '/':
+             tokens[nr_token].type=4;
+             break;
           default: TODO();
         }
-
+        nr_token++;
         break;
       }
     }
@@ -99,6 +121,75 @@ static bool make_token(char *e) {
   return true;
 }
 
+uint32_t eval(int p,int q)
+{
+  if(p>q)
+  {
+     assert(0);
+     return 0;
+  }
+  else if(p==q)
+  {
+     return atoi(tokens[p].str);
+  }
+  else
+  {
+     int op=0;
+     int n0=0;
+     int n1=0;
+     int i;
+     for(i=0;i<nr_token;i++)
+     {
+        if(tokens[i].type==2)
+        n0++;
+        else if(tokens[i].type==3)
+        n1++;
+     }
+     if(n0!=0)
+     {
+        int j;
+        for(j=nr_token-1;j>-1;j--)
+        {
+           if(tokens[j].type==2)
+           {
+              op=j;
+              break;
+           }
+        }
+     }
+     else if(n1!=0)
+     {
+        int j;
+        for(j=nr_token-1;j>-1;j--)
+        {
+           if(tokens[j].type==3)
+           {
+              op=j;
+              break;
+           }
+        }
+     }
+     int val1=eval(p,op-1);
+     int val2=eval(op+1,q);
+     switch(tokens[op].str[0])
+     {
+        case '+':
+          return val1+val2;
+          break;
+        case '-':
+          return val1-val2;
+          break;
+        case '*':
+          return val1*val2;
+          break;
+        case '/':
+          return val1/val2;
+          break;
+        default:
+          return 0;
+     }
+  }
+}
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -106,7 +197,8 @@ uint32_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
-
+  //TODO();
+  int terr=eval(0,nr_token);
+  printf("%d",terr);
   return 0;
 }
