@@ -118,8 +118,8 @@ static bool make_token(char *e) {
              break;
           default: break;
         }
-        */
         ++nr_token;
+        */
         break;
        
       }
