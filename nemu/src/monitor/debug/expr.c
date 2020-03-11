@@ -87,10 +87,10 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          * 末尾加\0
          */
-        /*
         if(substr_len>32)
            assert(0);
         printf("breakpointa");
+/*
         strncpy(tokens[nr_token].str,substr_start,substr_len);
         *(tokens[nr_token].str+substr_len)='\0';
         switch (rules[i].token_type) 
@@ -118,8 +118,8 @@ static bool make_token(char *e) {
              break;
           default: break;
         }
-        ++nr_token;
         */
+        ++nr_token;
         break;
        
       }
