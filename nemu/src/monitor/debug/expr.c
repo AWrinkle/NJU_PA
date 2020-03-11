@@ -90,6 +90,7 @@ static bool make_token(char *e) {
            assert(0);
         printf("breakpointa");
         strncpy(tokens[nr_token].str,substr_start,substr_len);
+        *(tokens[nr_token].str+substr_len)='\0';
         switch (rules[i].token_type) {
           case TK_NOTYPE:
              tokens[nr_token].type=1;
