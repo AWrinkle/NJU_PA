@@ -25,10 +25,13 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces 闭包
   {"\\+", '+'},         // plus 第一次转义\,第二次转义+
   {"==", TK_EQ},         // equal
-  {"-",'-'},
+  {"-",'-'},            
   {"\\*",'*'},
   {"\\/",'/'},
+  {"\\(",'('},
+  {"\\)",')'},
   {"[0-9]+",TK_NUM}
+  
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )//正则表达式个数
@@ -118,6 +121,12 @@ static bool make_token(char *e)
           case TK_NUM:
              tokens[nr_token].type=5;
              break;
+          case '(':
+             tokens[nr_token].type=6;
+             break;
+          case ')':
+             tokens[nr_token].type=7;
+             break;
           default: break;
         }
         nr_token++;
@@ -134,6 +143,31 @@ static bool make_token(char *e)
   return true;
 }
 
+bool check_parentheses(int p, int q)
+{
+   if(tokens[p].type==6&&tokens[q-1].type==7)
+   {
+      int ori=0;//初始左括号数量，出现右括号会使该值减一
+      if(p<q-2)
+      {
+         int i;
+         for(i=p+1;i<q-1;i++)
+         {
+            if(tokens[i].type==6)
+            ori++;
+            if(tokens[i].type==7)
+            ori--;
+            if(ori<0)
+            return false;
+         }
+         if(ori!=0)
+           return false;
+         return true; 
+      }
+   }
+   return false;
+}
+
 uint32_t eval(int p,int q)
 {
   if(p>q)
@@ -144,6 +178,10 @@ uint32_t eval(int p,int q)
   else if(p==q)
   {
      return atoi(tokens[p].str);
+  }
+  else if(check_parentheses(p,q))
+  {
+     return eval(p+1,q-1);
   }
   else
   {
@@ -211,7 +249,7 @@ uint32_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-  int terr=eval(0,nr_token-1);
+  int terr=eval(0,nr_token);
   printf("%d",terr);
   return 0;
 }
