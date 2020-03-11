@@ -74,7 +74,7 @@ static bool make_token(char *e) {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++)
  {
-      if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0)  {
+      if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so==0)  {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
@@ -93,7 +93,8 @@ static bool make_token(char *e) {
         printf("breakpointa");
         strncpy(tokens[nr_token].str,substr_start,substr_len);
         *(tokens[nr_token].str+substr_len)='\0';
-        switch (rules[i].token_type) {
+        switch (rules[i].token_type) 
+        {
           case TK_NOTYPE:
              tokens[nr_token].type=1;
              break;
