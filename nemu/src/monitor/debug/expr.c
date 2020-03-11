@@ -91,6 +91,8 @@ static bool make_token(char *e)
          */
         if(substr_len>32)
            assert(0);
+        if(rules[i].token_type!=TK_NOTYPE)
+        {
         strncpy(tokens[nr_token].str,substr_start,substr_len);
         *(tokens[nr_token].str+substr_len)='\0';
         switch (rules[i].token_type) 
@@ -119,8 +121,8 @@ static bool make_token(char *e)
           default: break;
         }
         nr_token++;
+        }
         break;
-       
       }
     }
     if (i == NR_REGEX) 
