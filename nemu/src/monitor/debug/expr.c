@@ -155,7 +155,7 @@ uint32_t eval(int p,int q)
      {
         if(tokens[i].type==2)
         n0++;
-        else if(tokens[i].type==3)
+        else if(tokens[i].type==4)
         n1++;
      }
      if(n0!=0)
