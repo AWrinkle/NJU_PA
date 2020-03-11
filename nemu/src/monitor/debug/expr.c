@@ -91,7 +91,6 @@ static bool make_token(char *e)
          */
         if(substr_len>32)
            assert(0);
-        printf("breakpointa");
         strncpy(tokens[nr_token].str,substr_start,substr_len);
         *(tokens[nr_token].str+substr_len)='\0';
         switch (rules[i].token_type) 
@@ -130,7 +129,6 @@ static bool make_token(char *e)
       return false;
     }
   }
-  printf("return");
   return true;
 }
 
@@ -211,7 +209,6 @@ uint32_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-  printf("test");
   int terr=eval(0,nr_token-1);
   printf("%d",terr);
   return 0;
