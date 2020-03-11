@@ -62,19 +62,23 @@ typedef struct token {
 
 Token tokens[32];
 int nr_token;
+int N=0;
 
-static bool make_token(char *e) {
+static bool make_token(char *e)
+{
   int position = 0;
   int i;
   regmatch_t pmatch;
   printf("%s",e);
   nr_token = 0;
   int terr=0;
-  while (e[position] != '\0') {
+  while (e[position] != '\0') 
+  {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++)
- {
-      if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so==0)  {
+    {
+      if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so==0)
+      {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
@@ -125,12 +129,14 @@ static bool make_token(char *e) {
        
       }
     }
-    if (i == NR_REGEX) {
+    if (i == NR_REGEX) 
+    {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
     }
   }
-  nr_token=terr;
+  //nr_token=terr;
+  N=terr;
   printf("return");
   return true;
 }
