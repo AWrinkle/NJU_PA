@@ -86,6 +86,7 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          * 末尾加\0
          */
+        printf("breakpoint");
         strncpy(tokens[nr_token].str,substr_start,substr_len);
         switch (rules[i].token_type) {
           case TK_NOTYPE:
