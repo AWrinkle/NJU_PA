@@ -149,7 +149,7 @@ uint32_t eval(int p,int q)
      int n0=0;
      int n1=0;
      int i;
-     for(i=0;i<nr_token;i++)
+     for(i=p;i<q;i++)
      {
         if(tokens[i].type==2)
         n0++;
@@ -159,7 +159,7 @@ uint32_t eval(int p,int q)
      if(n0!=0)
      {
         int j;
-        for(j=nr_token-1;j>-1;j--)
+        for(j=q-1;j>p-1;j--)
         {
            if(tokens[j].type==2)
            {
@@ -171,7 +171,7 @@ uint32_t eval(int p,int q)
      else if(n1!=0)
      {
         int j;
-        for(j=nr_token-1;j>-1;j--)
+        for(j=q-1;j>p-1;j--)
         {
            if(tokens[j].type==4)
            {
