@@ -62,7 +62,6 @@ typedef struct token {
 
 Token tokens[32];
 int nr_token;
-int N=0;
 
 static bool make_token(char *e)
 {
@@ -71,7 +70,6 @@ static bool make_token(char *e)
   regmatch_t pmatch;
   printf("%s",e);
   nr_token = 0;
-  int terr=0;
   while (e[position] != '\0') 
   {
     /* Try all rules one by one. */
@@ -94,36 +92,34 @@ static bool make_token(char *e)
         if(substr_len>32)
            assert(0);
         printf("breakpointa");
-        strncpy(tokens[terr].str,substr_start,substr_len);
-        *(tokens[terr].str+substr_len)='\0';
+        strncpy(tokens[nr_token].str,substr_start,substr_len);
+        *(tokens[nr_token].str+substr_len)='\0';
         switch (rules[i].token_type) 
         {
           case TK_NOTYPE:
-             tokens[terr].type=1;
+             tokens[nr_token].type=1;
              break;
           case '+':
-             tokens[terr].type=2;
+             tokens[nr_token].type=2;
              break;
           case TK_EQ:
-             tokens[terr].type=3;
+             tokens[nr_token].type=3;
              break;
           case '-':
-             tokens[terr].type=2;
+             tokens[nr_token].type=2;
              break;
           case '*':
-             tokens[terr].type=4;
+             tokens[nr_token].type=4;
              break;
           case '/':
-             tokens[terr].type=4;
+             tokens[nr_token].type=4;
              break;
           case TK_NUM:
-             tokens[terr].type=5;
+             tokens[nr_token].type=5;
              break;
           default: break;
         }
-        terr++;
         nr_token++;
-        printf("%d",terr);
         break;
        
       }
@@ -134,8 +130,6 @@ static bool make_token(char *e)
       return false;
     }
   }
-  //nr_token=terr;
-  N=terr;
   printf("return");
   return true;
 }
