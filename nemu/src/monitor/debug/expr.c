@@ -113,9 +113,9 @@ static bool make_token(char *e) {
           case TK_NUM:
              tokens[nr_token].type=5;
              break;
-          default: TODO();
+          default: break;
         }
-        nr_token++;
+        ++nr_token;
         break;
       }
     }
