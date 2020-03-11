@@ -178,7 +178,7 @@ uint32_t eval(int p,int q)
      else if(n1!=0)
      {
         int j;
-        for(j=nr_token-1;j>-1;j--)
+        for(j=N-1;j>-1;j--)
         {
            if(tokens[j].type==3)
            {
