@@ -94,35 +94,33 @@ static bool make_token(char *e)
         if(substr_len>32)
            assert(0);
         printf("breakpointa");
-/*
-        strncpy(tokens[nr_token].str,substr_start,substr_len);
-        *(tokens[nr_token].str+substr_len)='\0';
+        strncpy(tokens[terr].str,substr_start,substr_len);
+        *(tokens[terr].str+substr_len)='\0';
         switch (rules[i].token_type) 
         {
           case TK_NOTYPE:
-             tokens[nr_token].type=1;
+             tokens[terr].type=1;
              break;
           case '+':
-             tokens[nr_token].type=2;
+             tokens[terr].type=2;
              break;
           case TK_EQ:
-             tokens[nr_token].type=3;
+             tokens[terr].type=3;
              break;
           case '-':
-             tokens[nr_token].type=2;
+             tokens[terr].type=2;
              break;
           case '*':
-             tokens[nr_token].type=4;
+             tokens[terr].type=4;
              break;
           case '/':
-             tokens[nr_token].type=4;
+             tokens[terr].type=4;
              break;
           case TK_NUM:
-             tokens[nr_token].type=5;
+             tokens[terr].type=5;
              break;
           default: break;
         }
-*/
         terr++;
         printf("%d",terr);
         break;
