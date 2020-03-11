@@ -120,6 +120,7 @@ static bool make_token(char *e) {
         }
 */
         nr_token=nr_token+1;
+        printf("%d",nr_token);
         break;
        
       }
