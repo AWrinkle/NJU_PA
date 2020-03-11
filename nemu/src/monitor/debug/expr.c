@@ -72,8 +72,9 @@ static bool make_token(char *e) {
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
-    for (i = 0; i < NR_REGEX; i ++) {
-      if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
+    for (i = 0; i < NR_REGEX; i ++)
+ {
+      if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0)  {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
@@ -86,11 +87,12 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          * 末尾加\0
          */
+        /*
         if(substr_len>32)
            assert(0);
         printf("breakpointa");
-        //strncpy(tokens[nr_token].str,substr_start,substr_len);
-        //*(tokens[nr_token].str+substr_len)='\0';
+        strncpy(tokens[nr_token].str,substr_start,substr_len);
+        *(tokens[nr_token].str+substr_len)='\0';
         switch (rules[i].token_type) {
           case TK_NOTYPE:
              tokens[nr_token].type=1;
@@ -117,9 +119,9 @@ static bool make_token(char *e) {
         }
         ++nr_token;
         break;
+        */
       }
     }
-
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
