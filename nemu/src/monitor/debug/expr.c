@@ -189,19 +189,29 @@ uint32_t eval(int p,int q)
      int n0=0;
      int n1=0;
      int i;
+     int ori=0;//用来表示左括号数量，遇到右括号减一，遇到左括号加一
      for(i=p;i<q;i++)
-     {
-        if(tokens[i].type==2)
+     { 
+        if(tokens[i].type==6)
+        ori++;
+        if(tokens[i].type==7)
+        ori--; 
+        if(tokens[i].type==2&&ori==0)
         n0++;
-        else if(tokens[i].type==4)
+        else if(tokens[i].type==4&&ori==0)
         n1++;
      }
      if(n0!=0)
      {
         int j;
+        int ori1=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
         for(j=q-1;j>p-1;j--)
         {
-           if(tokens[j].type==2)
+           if(tokens[j].type==6)
+           ori1--;
+           if(tokens[j].type==7)
+           ori1++; 
+           if(tokens[j].type==2&&ori1==0)
            {
               op=j;
               break;
@@ -211,9 +221,14 @@ uint32_t eval(int p,int q)
      else if(n1!=0)
      {
         int j;
+        int ori1=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
         for(j=q-1;j>p-1;j--)
         {
-           if(tokens[j].type==4)
+           if(tokens[j].type==6)
+           ori1--;
+           if(tokens[j].type==7)
+           ori1++; 
+           if(tokens[j].type==4&&ori1==0)
            {
               op=j;
               break;
