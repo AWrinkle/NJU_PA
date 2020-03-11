@@ -69,7 +69,7 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
   printf("%s",e);
   nr_token = 0;
-
+  int terr=0;
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++)
@@ -119,7 +119,7 @@ static bool make_token(char *e) {
           default: break;
         }
 */
-        nr_token=nr_token+1;
+        terr++;
         printf("%d",nr_token);
         break;
        
