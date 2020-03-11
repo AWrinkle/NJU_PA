@@ -7,7 +7,7 @@
 #include <regex.h>
 //枚举类型第一个值确定后，后续依次递增
 enum {
-  TK_NOTYPE = 256, TK_EQ
+  TK_NOTYPE = 256, TK_EQ, TK_NUM
 
   /* TODO: Add more token types */
 
@@ -27,7 +27,8 @@ static struct rule {
   {"==", TK_EQ},         // equal
   {"-",'-'},
   {"\\*",'*'},
-  {"\\/",'/'}
+  {"\\/",'/'},
+  {"[0-9]",TK_NUM}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )//正则表达式个数
@@ -104,6 +105,9 @@ static bool make_token(char *e) {
              break;
           case '/':
              tokens[nr_token].type=4;
+             break;
+          case TK_NUM:
+             tokens[nr_token].type=5;
              break;
           default: TODO();
         }
