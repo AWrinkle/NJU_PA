@@ -122,6 +122,7 @@ static bool make_token(char *e)
           default: break;
         }
         terr++;
+        nr_token++;
         printf("%d",terr);
         break;
        
