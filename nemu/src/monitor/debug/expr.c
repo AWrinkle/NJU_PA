@@ -112,7 +112,6 @@ static bool make_token(char *e) {
              break;
           default: TODO();
         }
- printf("breakpointb");
         nr_token++;
         break;
       }
