@@ -5,6 +5,7 @@
  */
 #include <sys/types.h>
 #include <regex.h>
+#define Bad_Expression INT32_MAX-1
 //枚举类型第一个值确定后，后续依次递增
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_NUM
@@ -65,6 +66,7 @@ typedef struct token {
 
 Token tokens[32];
 int nr_token;
+int Bad=0; 
 
 static bool make_token(char *e)
 {
@@ -172,7 +174,7 @@ uint32_t eval(int p,int q)
 {
   if(p>q)
   {
-     //assert(0);
+     Bad=Bad_Expression;
      return 0;
   }
   else if(p==q)
@@ -197,7 +199,10 @@ uint32_t eval(int p,int q)
         if(tokens[i].type==7)
         ori--;
         if(ori<0)
-        assert(0);
+        {
+          Bad=Bad_Expression;
+          return 0;
+        }
         if(tokens[i].type==2&&ori==0)
         n0++;
         else if(tokens[i].type==4&&ori==0)
@@ -267,6 +272,12 @@ uint32_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
   int terr=eval(0,nr_token-1);
+  if(Bad==Bad_Expression)
+  {
+    *success = false;
+    printf("Bad Expression");
+    return 0;
+  }
   printf("%d",terr);
   return 0;
 }
