@@ -241,7 +241,7 @@ uint32_t eval(int p,int q)
            ori1++; 
            if(tokens[j].type==2&&ori1==0)
            {
-              if(j>0&&tokens[j].str[0]=='-')
+              if(j>p&&tokens[j].str[0]=='-')
               {
                  printf("a");
                  if(tokens[j-1].str[0]=='+'||tokens[j-1].str[0]=='-'||tokens[j-1].str[0]=='*'||tokens[j-1].str[0]=='/')
