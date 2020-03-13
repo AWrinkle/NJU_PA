@@ -203,28 +203,16 @@ uint32_t eval(int p,int q)
           return 0;
         }
         if(tokens[i].type==2&&ori==0)
-        n0++;
+        {
+          if(i>0)
+          {
+            n0++;
+          }
+        }
         else if(tokens[i].type==4&&ori==0)
         n1++;
      }
-     if(n0!=0)
-     {
-        int j;
-        int ori1=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
-        for(j=q;j>p-1;j--)
-        {
-           if(tokens[j].type==6)
-           ori1--;
-           if(tokens[j].type==7)
-           ori1++; 
-           if(tokens[j].type==2&&ori1==0)
-           {
-              op=j;
-              break;
-           }
-        }
-     }
-     else if(n1!=0)
+     if(n1!=0)
      {
         int j;
         int ori1=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
@@ -241,12 +229,38 @@ uint32_t eval(int p,int q)
            }
         }
      }
+     if(n0!=0)
+     {
+        int j;
+        int ori1=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
+        for(j=q;j>p-1;j--)
+        {
+           if(tokens[j].type==6)
+           ori1--;
+           if(tokens[j].type==7)
+           ori1++; 
+           if(tokens[j].type==2&&ori1==0)
+           {
+              if(j>0&&tokens[j].str[0]=='-')
+              {
+                 if(tokens[j-1].str[0]=='+'||tokens[j-1].str[0]=='-'||tokens[j-1].str[0]=='*'||tokens[j-1].str[0]=='/')
+                 continue;
+              }
+              op=j;
+              break;
+           }
+        }
+     }
      switch(tokens[op].str[0])
      {
         case '+':
           return eval(p,op-1)+eval(op+1,q);
           break;
         case '-':
+          if(op==0)
+          {
+            return -eval(p+1,q);
+          }
           return eval(p,op-1)-eval(op+1,q);
           break;
         case '*':
