@@ -244,7 +244,10 @@ uint32_t eval(int p,int q)
               if(j>0&&tokens[j].str[0]=='-')
               {
                  if(tokens[j-1].str[0]=='+'||tokens[j-1].str[0]=='-'||tokens[j-1].str[0]=='*'||tokens[j-1].str[0]=='/')
-                 continue;
+                 {
+                   continue;
+                   printf("a");
+                 }
               }
               op=j;
               break;
