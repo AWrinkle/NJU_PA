@@ -257,7 +257,7 @@ uint32_t eval(int p,int q)
           return eval(p,op-1)+eval(op+1,q);
           break;
         case '-':
-          if(op==0)
+          if(op==p)
           {
             return -eval(p+1,q);
           }
