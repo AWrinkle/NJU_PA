@@ -195,7 +195,9 @@ uint32_t eval(int p,int q)
         if(tokens[i].type==6)
         ori++;
         if(tokens[i].type==7)
-        ori--; 
+        ori--;
+        if(ori<0)
+        assert(0);
         if(tokens[i].type==2&&ori==0)
         n0++;
         else if(tokens[i].type==4&&ori==0)
