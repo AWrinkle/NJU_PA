@@ -169,7 +169,7 @@ bool check_parentheses(int p, int q)
    return false;
 }
 
-uint32_t eval(int p,int q)
+int32_t eval(int p,int q)
 {
   if(p>q)
   {
