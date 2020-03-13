@@ -190,7 +190,7 @@ uint32_t eval(int p,int q)
      int n1=0;
      int i;
      int ori=0;//用来表示左括号数量，遇到右括号减一，遇到左括号加一
-     for(i=p;i<q;i++)
+     for(i=p;i<=q;i++)
      { 
         if(tokens[i].type==6)
         ori++;
@@ -205,7 +205,7 @@ uint32_t eval(int p,int q)
      {
         int j;
         int ori1=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
-        for(j=q-1;j>p-1;j--)
+        for(j=q;j>p-1;j--)
         {
            if(tokens[j].type==6)
            ori1--;
@@ -222,7 +222,7 @@ uint32_t eval(int p,int q)
      {
         int j;
         int ori1=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
-        for(j=q-1;j>p-1;j--)
+        for(j=q;j>p-1;j--)
         {
            if(tokens[j].type==6)
            ori1--;
