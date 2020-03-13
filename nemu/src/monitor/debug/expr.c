@@ -254,6 +254,7 @@ uint32_t eval(int p,int q)
            }
         }
      }
+     int a,b;
      switch(tokens[op].str[0])
      {
         case '+':
@@ -270,6 +271,10 @@ uint32_t eval(int p,int q)
           return eval(p,op-1)*eval(op+1,q);
           break;
         case '/':
+          a=eval(p,op-1);
+          b=eval(op+1,q);
+          printf("%d\n",a);
+          printf("%d\n",b);
           return eval(p,op-1)/eval(op+1,q);
           break;
         default:
