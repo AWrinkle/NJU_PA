@@ -241,21 +241,19 @@ uint32_t eval(int p,int q)
            }
         }
      }
-     int val1=eval(p,op-1);
-     int val2=eval(op+1,q);
      switch(tokens[op].str[0])
      {
         case '+':
-          return val1+val2;
+          return eval(p,op-1)+eval(op+1,q);
           break;
         case '-':
-          return val1-val2;
+          return eval(p,op-1)-eval(op+1,q);
           break;
         case '*':
-          return val1*val2;
+          return eval(p,op-1)*eval(op+1,q);
           break;
         case '/':
-          return val1/val2;
+          return eval(p,op-1)/eval(op+1,q);
           break;
         default:
           return 0;
