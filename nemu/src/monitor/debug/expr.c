@@ -274,9 +274,9 @@ uint32_t expr(char *e, bool *success) {
   if(Bad==Bad_Expression)
   {
     *success = false;
-    printf("Bad Expression");
+    printf("Bad Expression\n");
     return 0;
   }
-  printf("%d",terr);
+  printf("%d\n",terr);
   return 0;
 }
