@@ -124,12 +124,15 @@ static int cmd_x(char *args)
    printf("%d\n",nLen);
    printf("%d\n",terr);
    vaddr_t addr;
+   addr=terr;
+   /*
    int nRet=sscanf(args,"%d 0x%x",&nLen,&addr);
    if(nRet<=0)
    {
       printf("args error\n");
       return 0;
    }
+   */
    printf("Memory:");
    for(int i=0;i<nLen;i++)
    {
