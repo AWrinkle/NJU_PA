@@ -337,6 +337,8 @@ int32_t eval(int p,int q)
                 return reg_b(i);
            }
            printf("%s\n",tokens[p].str);
+           printf("%s\n",tokens[p+1].str);
+           printf("%s\n",tokens[p+2].str);
            if(strcmp(tokens[p].str,"eip")==0)
              return cpu.eip;
            else
