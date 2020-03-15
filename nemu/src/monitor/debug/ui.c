@@ -101,7 +101,9 @@ static int cmd_info(char *args)
 static int cmd_p(char *args)
 {
    bool a;
-   expr(args,&a);
+   int terr=expr(args,&a);
+   
+   printf("%d\n",terr);
    return 0;
 }
 static int cmd_x(char *args)
@@ -109,6 +111,8 @@ static int cmd_x(char *args)
    int nLen=0;
    vaddr_t addr;
    int nRet=sscanf(args,"%d 0x%x",&nLen,&addr);
+   //bool a;
+   
    if(nRet<=0)
    {
       printf("args error\n");
