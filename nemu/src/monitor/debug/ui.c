@@ -116,13 +116,9 @@ static int cmd_x(char *args)
    //char *s_end=args+strlen(args);
    char *s1=strtok(args, " ");
    char *s2=s1+strlen(s1)+1;
-   printf("%s\n",s1);
-   printf("%s\n",s2);
    nLen=atoi(s1);
    bool a;
    int terr=expr(s2,&a);
-   printf("%d\n",nLen);
-   printf("%d\n",terr);
    vaddr_t addr;
    addr=terr;
    /*
