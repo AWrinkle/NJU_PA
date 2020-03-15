@@ -88,12 +88,14 @@ static int cmd_info(char *args)
            printf("%s   0x%x\n",regsb[i],reg_b(i));
          }
       }
-      /*
+      
       else if(strlen(args)==1&&args[0]=='w')
       {
-         
+         printf("print\n");
+         print_wp();
+         return 0;   
       }
-      */
+      
       return 0;
    }
 }
