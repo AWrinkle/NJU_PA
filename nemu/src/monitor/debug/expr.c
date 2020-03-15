@@ -105,12 +105,12 @@ static bool make_token(char *e)
         {
           if(rules[i].token_type==TK_HEX)
           {
-            strncpy(tokens[nr_token].str,substr_start+2,substr_len);
+            strncpy(tokens[nr_token].str,substr_start+2,substr_len-2);
             *(tokens[nr_token].str+substr_len)='\0';
           }
           else if(rules[i].token_type==TK_REG)
           {
-            strncpy(tokens[nr_token].str,substr_start+1,substr_len);
+            strncpy(tokens[nr_token].str,substr_start+1,substr_len-1);
             *(tokens[nr_token].str+substr_len)='\0';
           }
           else
@@ -336,9 +336,6 @@ int32_t eval(int p,int q)
               if(strcmp(tokens[p].str,regsb[i])==0)
                 return reg_b(i);
            }
-           printf("%s\n",tokens[p].str);
-           printf("%s\n",tokens[p+1].str);
-           printf("%s\n",tokens[p+2].str);
            if(strcmp(tokens[p].str,"eip")==0)
              return cpu.eip;
            else
