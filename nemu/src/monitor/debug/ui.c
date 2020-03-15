@@ -114,6 +114,7 @@ static int cmd_x(char *args)
       printf("args error\n");
       return 0;
    }
+   printf("%d",addr);
    printf("Memory:");
    for(int i=0;i<nLen;i++)
    {
