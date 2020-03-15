@@ -117,8 +117,8 @@ static int cmd_x(char *args)
    //char *s_end=args+strlen(args);
    char *s1=strtok(args, " ");
    char *s2=s1+strlen(s1)+1;
-   printf("%s",s1);
-   printf("%s",s2);
+   printf("%s\n",s1);
+   printf("%s\n",s2);
    vaddr_t addr;
    int nRet=sscanf(args,"%d 0x%x",&nLen,&addr);
    if(nRet<=0)
