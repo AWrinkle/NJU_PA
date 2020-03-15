@@ -359,14 +359,12 @@ int32_t eval(int p,int q)
      {
         case '+':
           return eval(p,op-1)+eval(op+1,q);
-          break;
         case '-':
           if(op==p)
           {
             return -eval(p+1,q);
           }
           return eval(p,op-1)-eval(op+1,q);
-          break;
         case '*':
           if(op==p)
           {
@@ -376,10 +374,22 @@ int32_t eval(int p,int q)
             return result;
           }
           return eval(p,op-1)*eval(op+1,q);
-          break;
         case '/':
           return eval(p,op-1)/eval(op+1,q);
-          break;
+        case '!':
+          result=eval(p+1,q);
+          if(result!=0)
+            return 0;
+          else
+            return 1;
+        case TK_EQ:
+           return eval(p,op-1)==eval(op+1,q);
+        case TK_NEQ:
+           return eval(p,op-1)!=eval(op+1,q);
+        case TK_AND:
+           return eval(p,op-1)&&eval(op+1,q);
+        case TK_OR:
+           return eval(p,op-1)||eval(op+1,q);
         default:
           return 0;
      }
