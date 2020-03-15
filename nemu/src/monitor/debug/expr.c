@@ -325,6 +325,8 @@ int32_t eval(int p,int q)
   {
      int op;
      op=dominabtOp(p,q);
+     vaddr_t addr;
+     int result;
      switch(tokens[op].type)
      {
         case '+':
@@ -338,6 +340,13 @@ int32_t eval(int p,int q)
           return eval(p,op-1)-eval(op+1,q);
           break;
         case '*':
+          if(op==p)
+          {
+            addr=eval(p+1,q);
+            result=vaddr_read(addr,4);
+            printf("addr=%u(0x%x)---->value=%d(0x%08x)\n",addr,addr,result,result);
+            return result;
+          }
           return eval(p,op-1)*eval(op+1,q);
           break;
         case '/':
