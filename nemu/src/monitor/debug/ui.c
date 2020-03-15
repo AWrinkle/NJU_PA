@@ -108,7 +108,17 @@ static int cmd_p(char *args)
 }
 static int cmd_x(char *args)
 {
+   if(args==NULL)
+   {
+      printf("input more specific instruction\n");
+      return 0;  
+   }
    int nLen=0;
+   //char *s_end=args+strlen(args);
+   char *s1=strtok(args, " ");
+   char *s2=s1+strlen(s1)+1;
+   printf("%s",s1);
+   printf("%s",s2);
    vaddr_t addr;
    int nRet=sscanf(args,"%d 0x%x",&nLen,&addr);
    if(nRet<=0)
@@ -119,8 +129,6 @@ static int cmd_x(char *args)
    int terr=addr;
    char terr_c[30];
    sprintf(terr_c,"%d",terr);
-   printf("%d",terr);
-   printf("%s",terr_c);
    printf("Memory:");
    for(int i=0;i<nLen;i++)
    {
