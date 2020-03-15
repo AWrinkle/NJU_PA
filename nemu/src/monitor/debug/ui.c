@@ -91,7 +91,6 @@ static int cmd_info(char *args)
       
       else if(strlen(args)==1&&args[0]=='w')
       {
-         printf("print\n");
          print_wp();
          return 0;   
       }
