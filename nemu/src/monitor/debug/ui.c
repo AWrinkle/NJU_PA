@@ -104,7 +104,27 @@ static int cmd_p(char *args)
    expr(args,&a);
    return 0;
 }
-
+static int cmd_x(char *args)
+{
+   int nLen=0;
+   vaddr_t addr;
+   int nRet=sscanf(args,"%d 0x%x",&nLen,&addr);
+   if(nRet<=0)
+   {
+      printf("args error\n");
+      return 0;
+   }
+   printf("Memory:");
+   for(int i=0;i<nLen;i++)
+   {
+      if(i%4==0)
+        printf("\n0x%x: 0x%02x",addr+i,vaddr_read(addr+i,1));
+      else
+        printf(" 0x%02x",vaddr_read(addr+i,1));
+   }
+   printf("\n");
+   return 0;
+}
 static struct {
   char *name;
   char *description;
@@ -118,6 +138,7 @@ static struct {
   {"si","pause after excuting N instruction", cmd_si },
   {"info","print information about register or watchpoint",cmd_info},
   {"p","calculate the result of expression",cmd_p},
+  {"x","Scanning memory",cmd_x},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
