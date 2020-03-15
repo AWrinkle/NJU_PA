@@ -410,6 +410,6 @@ uint32_t expr(char *e, bool *success) {
     printf("Bad Expression\n");
     return 0;
   }
-  printf("%d\n",terr);
-  return 0;
+  //printf("%d\n",terr);
+  return terr;
 }
