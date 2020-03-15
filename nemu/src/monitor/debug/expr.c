@@ -326,6 +326,21 @@ int32_t eval(int p,int q)
            sscanf(tokens[p].str,"%x",&num);
            return num;
            break;
+       case TK_REG:
+           for(int i=0;i<8;i++)
+           {
+              if(strcmp(tokens[p].str,regsl[i])==0)
+                return reg_l(i);
+              if(strcmp(tokens[p].str,regsw[i])==0)
+                return reg_w(i);
+              if(strcmp(tokens[p].str,regsb[i])==0)
+                return reg_b(i);
+           }
+           if(strcmp(tokens[p].str,"eip")==0)
+             return cpu.eip;
+           else
+             printf("error in TK_REG in eval()\n");
+             assert(0);
        default:
            return 0;
      }
