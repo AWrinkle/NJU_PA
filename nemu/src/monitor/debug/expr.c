@@ -154,7 +154,7 @@ static bool make_token(char *e)
 
 bool check_parentheses(int p, int q)
 {
-   if(tokens[p].type==6&&tokens[q].type==7)
+   if(tokens[p].type=='('&&tokens[q].type==')')
    {
       int l_bracket=0;//初始左括号数量，出现右括号会使该值减一
       if(p<q-1)
