@@ -119,6 +119,12 @@ static int cmd_x(char *args)
    char *s2=s1+strlen(s1)+1;
    printf("%s\n",s1);
    printf("%s\n",s2);
+   nLen=atoi(s1);
+   bool a;
+   int terr=expr(s2,&a);
+   printf("%d\n",nLen);
+   if(a)
+   printf("%d\n",terr);
    vaddr_t addr;
    int nRet=sscanf(args,"%d 0x%x",&nLen,&addr);
    if(nRet<=0)
@@ -126,9 +132,6 @@ static int cmd_x(char *args)
       printf("args error\n");
       return 0;
    }
-   int terr=addr;
-   char terr_c[30];
-   sprintf(terr_c,"%d",terr);
    printf("Memory:");
    for(int i=0;i<nLen;i++)
    {
