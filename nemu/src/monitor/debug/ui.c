@@ -140,6 +140,27 @@ static int cmd_x(char *args)
    printf("\n");
    return 0;
 }
+static int cmd_w(char *args)
+{
+   new_wp(args);
+   return 0;
+}
+static int cmd_d(char *args)
+{
+  int num=0;
+  int nRet=sscanf(args,"%d",&num);
+  if(nRet<0)
+  {
+    printf("args error\n");
+    return 0;
+  }
+  int r=free_wp(num);
+  if(r==false)
+    printf("error: no watchpoint %d\n",num);
+  else
+    printf("Success delete watchpoint %d\n",num);
+  return 0;
+}
 static struct {
   char *name;
   char *description;
@@ -154,6 +175,8 @@ static struct {
   {"info","print information about register or watchpoint",cmd_info},
   {"p","calculate the result of expression",cmd_p},
   {"x","Scanning memory",cmd_x},
+  {"w","apply for new watchpoint",cmd_w},
+  {"d","delete wathcpoint",cmd_d},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
