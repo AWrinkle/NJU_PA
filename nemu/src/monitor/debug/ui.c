@@ -123,7 +123,6 @@ static int cmd_x(char *args)
    bool a;
    int terr=expr(s2,&a);
    printf("%d\n",nLen);
-   if(a)
    printf("%d\n",terr);
    vaddr_t addr;
    int nRet=sscanf(args,"%d 0x%x",&nLen,&addr);
