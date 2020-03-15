@@ -102,7 +102,6 @@ static int cmd_p(char *args)
 {
    bool a;
    int terr=expr(args,&a);
-   if(a)
    printf("%d\n",terr);
    return 0;
 }
