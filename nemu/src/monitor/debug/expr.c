@@ -8,7 +8,7 @@
 #define Bad_Expression INT32_MAX-1
 //枚举类型第一个值确定后，后续依次递增
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM
+  TK_NOTYPE = 256, TK_EQ, TK_NUM,TK_HEX,TK_REG,TK_NEQ,TK_AND,TK_OR
 
   /* TODO: Add more token types */
 
@@ -24,14 +24,20 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces 闭包
-  {"\\+", '+'},         // plus 第一次转义\,第二次转义+
+  {"0x[1-9A-Fa-f][0-9A-Fa-f]*",TK_HEX},
+  {"0|[1-9][0-9]*",TK_NUM},
+  {"\\$(eax|ecx|edx|ebx|esp|ebp|esi|edi|eip|ax|cx|dx|bx|sp|bp|si|di|al|cl|dl|bl|ah|ch|dh|bh)",TK_REG},
   {"==", TK_EQ},         // equal
+  {"!=",TK_NEQ},
+  {"&&",TK_AND},
+  {"\\|\\|",TK_OR},
+  {"!",'!'},
+  {"\\+", '+'},         // plus 第一次转义\,第二次转义+
   {"-",'-'},            
   {"\\*",'*'},
   {"\\/",'/'},
   {"\\(",'('},
-  {"\\)",')'},
-  {"[0-9]+",TK_NUM}
+  {"\\)",')'}
   
 };
 
@@ -97,37 +103,39 @@ static bool make_token(char *e)
            assert(0);
         if(rules[i].token_type!=TK_NOTYPE)
         {
-        strncpy(tokens[nr_token].str,substr_start,substr_len);
-        *(tokens[nr_token].str+substr_len)='\0';
+          if(rules[i].token_type==TK_HEX)
+          {
+            strncpy(tokens[nr_token].str,substr_start+2,substr_len);
+            *(tokens[nr_token].str+substr_len)='\0';
+          }
+          else if(rules[i].token_type==TK_REG)
+          {
+            strncpy(tokens[nr_token].str,substr_start+1,substr_len);
+            *(tokens[nr_token].str+substr_len)='\0';
+          }
+          else
+          {
+            strncpy(tokens[nr_token].str,substr_start,substr_len);
+            *(tokens[nr_token].str+substr_len)='\0';
+          }
         switch (rules[i].token_type) 
         {
-          case TK_NOTYPE:
-             tokens[nr_token].type=1;
-             break;
-          case '+':
-             tokens[nr_token].type=2;
-             break;
+          case TK_REG:
+          case TK_HEX:
+          case TK_AND:
+          case TK_OR:
           case TK_EQ:
-             tokens[nr_token].type=3;
-             break;
+          case TK_NEQ:
+          case '+':
           case '-':
-             tokens[nr_token].type=2;
-             break;
           case '*':
-             tokens[nr_token].type=4;
-             break;
           case '/':
-             tokens[nr_token].type=4;
-             break;
-          case TK_NUM:
-             tokens[nr_token].type=5;
-             break;
+          case '!':
+          case TK_NUM:   
           case '(':
-             tokens[nr_token].type=6;
-             break;
           case ')':
-             tokens[nr_token].type=7;
-             break;
+          tokens[nr_token].type=rules[i].token_type;
+          break;
           default: break;
         }
         nr_token++;
@@ -148,25 +156,154 @@ bool check_parentheses(int p, int q)
 {
    if(tokens[p].type==6&&tokens[q].type==7)
    {
-      int ori=0;//初始左括号数量，出现右括号会使该值减一
+      int l_bracket=0;//初始左括号数量，出现右括号会使该值减一
       if(p<q-1)
       {
          int i;
          for(i=p+1;i<q;i++)
          {
-            if(tokens[i].type==6)
-            ori++;
-            if(tokens[i].type==7)
-            ori--;
-            if(ori<0)
+            if(tokens[i].type=='(')
+            l_bracket++;
+            if(tokens[i].type==')')
+            l_bracket--;
+            if(l_bracket<0)
             return false;
          }
-         if(ori!=0)
+         if(l_bracket!=0)
            return false;
          return true; 
       }
    }
    return false;
+}
+int dominabtOp(int p,int q)
+{
+  int op=-1;
+  int n0=0; //&& ||
+  int n1=0; //== !=
+  int n2=0; //+ -
+  int n3=0; //* /
+  int n4=0; //- * !
+  int i;
+  int r_bracket=0;
+  for(i=p;i<=q;i++)
+  {
+     if(tokens[i].type=='(')
+        r_bracket++;
+     if(tokens[i].type==')')
+        r_bracket--;
+     if(r_bracket<0)
+     {
+        Bad=Bad_Expression;
+        return 0;
+     }
+     if((tokens[i].type==TK_OR||tokens[i].type==TK_AND)&&r_bracket==0)
+        n0++;
+     if((tokens[i].type==TK_NEQ||tokens[i].type==TK_EQ)&&r_bracket==0)
+        n1++;
+     if((tokens[i].type=='+'||tokens[i].type=='-')&&r_bracket==0)
+        n2++;
+     if((tokens[i].type=='*'||tokens[i].type=='/')&&r_bracket==0)
+        n3++;
+     if(tokens[i].type=='!'&&r_bracket==0)
+        n4++;
+  }
+  if(n4!=0)
+  {
+     int j;
+     int r_bracket=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
+     for(j=q;j>p-1;j--)
+     {
+        if(tokens[j].type=='(')
+        r_bracket--;
+        if(tokens[j].type==')')
+        r_bracket++; 
+        if(tokens[j].type=='!'&&r_bracket==0)
+        {
+           op=j;
+           break;
+        }
+     }
+   }
+   if(n3!=0) //* /
+   {
+     int j;
+     int r_bracket=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
+     for(j=q;j>p-1;j--)
+     {
+        if(tokens[j].type=='(')
+        r_bracket--;
+        if(tokens[j].type==')')
+        r_bracket++; 
+        if((tokens[j].type=='*'||tokens[j].type=='/')&&r_bracket==0)
+        {
+           if(j>p&&tokens[j].type=='*')
+           {
+              if(tokens[j-1].type!=TK_NUM&&tokens[j-1].type!=')')
+              continue;
+           }
+           op=j;
+           break;
+        }
+      }
+    }
+    if(n2!=0) //+ -
+    {
+      int j;
+      int r_bracket=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
+      for(j=q;j>p-1;j--)
+      {
+         if(tokens[j].type=='(')
+         r_bracket--;
+         if(tokens[j].type==')')
+         r_bracket++; 
+         if((tokens[j].type=='+'||tokens[j].type=='-')&&r_bracket==0)
+         {
+            if(j>p&&tokens[j].type=='-')
+            {
+               if(tokens[j-1].type!=TK_NUM&&tokens[j-1].type!=')')
+               continue;
+            }
+            op=j;
+            break;
+         }
+       }
+     }
+     if(n1!=0)
+     {
+       int j;
+       int r_bracket=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
+       for(j=q;j>p-1;j--)
+       {
+          if(tokens[j].type=='(')
+          r_bracket--;
+          if(tokens[j].type==')')
+          r_bracket++; 
+          if((tokens[j].type==TK_EQ||tokens[j].type==TK_NEQ)&&r_bracket==0)
+          {
+             op=j;
+             break;
+          }
+       }
+     }
+     if(n0!=0)
+     {
+       int j;
+       int r_bracket=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
+       for(j=q;j>p-1;j--)
+       {
+          if(tokens[j].type=='(')
+          r_bracket--;
+          if(tokens[j].type==')')
+          r_bracket++; 
+          if((tokens[j].type==TK_OR||tokens[j].type==TK_AND)&&r_bracket==0)
+          {
+             op=j;
+             break;
+          }
+       }
+     }
+     return op;
 }
 
 int32_t eval(int p,int q)
@@ -186,76 +323,9 @@ int32_t eval(int p,int q)
   }
   else
   {
-     int op=0;
-     int n0=0;
-     int n1=0;
-     int i;
-     int ori=0;//用来表示左括号数量，遇到右括号减一，遇到左括号加一
-     for(i=p;i<=q;i++)
-     { 
-        if(tokens[i].type==6)
-        ori++;
-        if(tokens[i].type==7)
-        ori--;
-        if(ori<0)
-        {
-          Bad=Bad_Expression;
-          return 0;
-        }
-        if(tokens[i].type==2&&ori==0)
-        {
-          if(i>0)
-          {
-            n0++;
-          }
-        }
-        else if(tokens[i].type==4&&ori==0)
-        n1++;
-     }
-     if(n1!=0)
-     {
-        int j;
-        int ori1=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
-        for(j=q;j>p-1;j--)
-        {
-           if(tokens[j].type==6)
-           ori1--;
-           if(tokens[j].type==7)
-           ori1++; 
-           if(tokens[j].type==4&&ori1==0)
-           {
-              op=j;
-              break;
-           }
-        }
-     }
-     if(n0!=0)
-     {
-        int j;
-        int ori1=0;//用来表示右括号数量，遇到左括号减一，遇到右括号加一
-        for(j=q;j>p-1;j--)
-        {
-           if(tokens[j].type==6)
-           ori1--;
-           if(tokens[j].type==7)
-           ori1++; 
-           if(tokens[j].type==2&&ori1==0)
-           {
-              if(j>p&&tokens[j].str[0]=='-')
-              {
-                 
-                 if(tokens[j-1].str[0]=='+'||tokens[j-1].str[0]=='-'||tokens[j-1].str[0]=='*'||tokens[j-1].str[0]=='/')
-                 {
-                   continue;
-                 }
-              }
-              op=j;
-              break;
-           }
-        }
-     }
-     int a,b;
-     switch(tokens[op].str[0])
+     int op;
+     op=dominabtOp(p,q);
+     switch(tokens[op].type)
      {
         case '+':
           return eval(p,op-1)+eval(op+1,q);
@@ -271,10 +341,6 @@ int32_t eval(int p,int q)
           return eval(p,op-1)*eval(op+1,q);
           break;
         case '/':
-          a=eval(p,op-1);
-          b=eval(op+1,q);
-          printf("%d\n",a);
-          printf("%d\n",b);
           return eval(p,op-1)/eval(op+1,q);
           break;
         default:
