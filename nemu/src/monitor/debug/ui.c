@@ -119,6 +119,7 @@ static int cmd_x(char *args)
    int terr=addr;
    char terr_c[30];
    sprintf(terr_c,"%d",terr);
+   printf("%d",terr);
    printf("%s",terr_c);
    printf("Memory:");
    for(int i=0;i<nLen;i++)
