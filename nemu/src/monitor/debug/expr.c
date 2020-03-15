@@ -315,7 +315,20 @@ int32_t eval(int p,int q)
   }
   else if(p==q)
   {
-     return atoi(tokens[p].str);
+     int num;
+     switch(tokens[p].type)
+     {
+       case TK_NUM:
+           num=atoi(tokens[p].str);
+           return num;
+           break;
+       case TK_HEX:
+           sscanf(tokens[p].str,"%x",&num);
+           return num;
+           break;
+       default:
+           return 0;
+     }
   }
   else if(check_parentheses(p,q))
   {
