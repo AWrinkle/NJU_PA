@@ -117,8 +117,9 @@ static int cmd_x(char *args)
       return 0;
    }
    int terr=addr;
-   printf("%d\n",addr);
-   printf("%d\n",terr);
+   char terr_c[30];
+   sprintf(terr_c,"%d",terr);
+   printf("%s",terr_c);
    printf("Memory:");
    for(int i=0;i<nLen;i++)
    {
