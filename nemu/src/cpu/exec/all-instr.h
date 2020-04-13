@@ -10,3 +10,6 @@ make_EHelper(pop);
 make_EHelper(sub);
 make_EHelper(xor);
 make_EHelper(ret);
+
+//PA2第二阶段
+make_EHelper(lea);
