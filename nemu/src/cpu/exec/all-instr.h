@@ -13,3 +13,4 @@ make_EHelper(ret);
 
 //PA2第二阶段
 make_EHelper(lea);
+make_EHelper(and);
