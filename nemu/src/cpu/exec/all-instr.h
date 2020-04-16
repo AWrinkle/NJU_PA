@@ -26,3 +26,5 @@ make_EHelper(jcc);
 //add-longlong.c
 make_EHelper(adc);
 make_EHelper(or);
+//bit.c
+make_EHelper(sar);
