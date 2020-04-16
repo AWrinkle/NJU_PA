@@ -12,6 +12,7 @@ make_EHelper(xor);
 make_EHelper(ret);
 
 //PA2第二阶段
+//add.c
 make_EHelper(lea);
 make_EHelper(and);
 make_EHelper(nop);
@@ -22,3 +23,5 @@ make_EHelper(movsx);
 make_EHelper(movzx);
 make_EHelper(test);
 make_EHelper(jcc);
+//add-longlong.c
+make_EHelper(adc);
