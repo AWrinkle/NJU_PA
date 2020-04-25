@@ -29,3 +29,4 @@ make_EHelper(or);
 //bit.c
 make_EHelper(sar);
 make_EHelper(shl);
+make_EHelper(dec);
