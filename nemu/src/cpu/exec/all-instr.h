@@ -43,3 +43,4 @@ make_EHelper(idiv);
 //hello-str.c
 make_EHelper(jmp_rm);//根据寄存器取值并跳转
 make_EHelper(leave);
+make_EHelper(div);
