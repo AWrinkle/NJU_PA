@@ -37,3 +37,5 @@ make_EHelper(inc);
 make_EHelper(imul1);
 make_EHelper(imul2);
 make_EHelper(imul3);
+//goldbach.c
+make_EHelper(cltd);
