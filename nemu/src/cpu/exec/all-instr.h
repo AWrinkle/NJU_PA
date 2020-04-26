@@ -30,7 +30,7 @@ make_EHelper(or);
 make_EHelper(sar);
 make_EHelper(shl);
 make_EHelper(dec);
-make_EHelper(jmp);
+make_EHelper(jmp);//根据偏移量计算并跳转
 //bubble-sort.c
 make_EHelper(inc);
 //fact.c
@@ -40,3 +40,5 @@ make_EHelper(imul3);
 //goldbach.c
 make_EHelper(cltd);
 make_EHelper(idiv);
+//hello-str.c
+make_EHelper(jmp_rm);//根据寄存器取值并跳转
