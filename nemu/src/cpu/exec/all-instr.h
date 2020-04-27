@@ -52,3 +52,5 @@ make_EHelper(mul);
 make_EHelper(call_rm);
 //shift.c
 make_EHelper(shr);
+//sub-longlong.c
+make_EHelper(sbb);
