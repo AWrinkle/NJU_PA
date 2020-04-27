@@ -48,3 +48,5 @@ make_EHelper(div);
 make_EHelper(not);
 //mul-longlong.c
 make_EHelper(mul);
+//recursion.c
+make_EHelper(call_rm);
