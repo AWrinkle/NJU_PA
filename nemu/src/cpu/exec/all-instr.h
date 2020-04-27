@@ -46,3 +46,5 @@ make_EHelper(leave);
 make_EHelper(div);
 //load-store.c
 make_EHelper(not);
+//mul-longlong.c
+make_EHelper(mul);
