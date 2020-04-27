@@ -17,7 +17,7 @@ static inline void eflags_modify(){
 }
 
 make_EHelper(add) {
-  printf("esi %x\n  ",reg_l(6));
+  printf("esi %x  ",reg_l(6));
   //TODO();
   rtl_add(&t2,&id_dest->val,&id_src->val);
   operand_write(id_dest,&t2);
