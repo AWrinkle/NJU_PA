@@ -17,6 +17,7 @@ static inline void eflags_modify(){
 }
 
 make_EHelper(add) {
+  printf("esi %x\n  ",reg_l(6));
   //TODO();
   rtl_add(&t2,&id_dest->val,&id_src->val);
   operand_write(id_dest,&t2);
@@ -31,7 +32,7 @@ make_EHelper(add) {
   rtl_and(&t0,&t0,&t1);
   rtl_msb(&t0,&t0,id_dest->width);
   rtl_set_OF(&t0);
-  printf("esi %x",reg_l(6));
+  printf("esi %x\n",reg_l(6));
   print_asm_template2(add);
 }
 

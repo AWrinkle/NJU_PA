@@ -1,8 +1,6 @@
 #include "cpu/exec.h"
 
 make_EHelper(mov) {
-  //printf("esi %x",reg_l(6));
-  //printf("ebx %x",reg_l(3));
   operand_write(id_dest, &id_src->val);
   print_asm_template2(mov);
 }
