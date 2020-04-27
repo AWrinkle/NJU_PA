@@ -50,3 +50,5 @@ make_EHelper(not);
 make_EHelper(mul);
 //recursion.c
 make_EHelper(call_rm);
+//shift.c
+make_EHelper(shr);
