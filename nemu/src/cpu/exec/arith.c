@@ -147,7 +147,7 @@ make_EHelper(mul) {
 make_EHelper(imul1) {
   rtl_lr(&t0, R_EAX, id_dest->width);
   rtl_imul(&t0, &t1, &id_dest->val, &t0);
-
+  printf("%d",id_dest->width);
   switch (id_dest->width) {
     case 1:
       rtl_sr_w(R_AX, &t1);
