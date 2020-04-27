@@ -2,6 +2,8 @@
 
 make_EHelper(mov) {
   operand_write(id_dest, &id_src->val);
+  printf("esi %x\n",reg_l(6));
+  printf("ebx %x\n",reg_l(3));
   print_asm_template2(mov);
 }
 
