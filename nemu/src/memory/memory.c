@@ -13,6 +13,8 @@ uint8_t pmem[PMEM_SIZE];
 
 uint32_t paddr_read(paddr_t addr, int len) {
   int r=is_mmio(addr);
+  printf("%X/n",addr);
+  printf("%d",r);
   if(r==-1)
           return pmem_rw(addr, uint32_t) & (~0u >> ((4 - len) << 3));
   else
