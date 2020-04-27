@@ -141,6 +141,7 @@ static inline void rtl_not(rtlreg_t* dest) {
 static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- signext(src1[(width * 8 - 1) .. 0])
   // TODO()，符号扩展;
+  /*
   if(width==4)
   {
         rtl_mv(dest,src1);
@@ -151,6 +152,10 @@ static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
         rtl_shli(dest,src1,(4-width)*8);
         rtl_sari(dest,dest,(4-width)*8);
   }
+  */
+  rtl_li(&t1,32-width*8);
+  rtl_shl(dest,src1,&t1);
+  rtl_sar(dest,dest,&t1);
 }
 
 static inline void rtl_push(const rtlreg_t* src1) {
