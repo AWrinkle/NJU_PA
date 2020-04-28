@@ -61,3 +61,4 @@ make_EHelper(out);
 make_EHelper(cwtl);
 //microbench
 make_EHelper(neg);
+make_EHelper(rol);
