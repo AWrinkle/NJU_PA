@@ -57,3 +57,5 @@ make_EHelper(sbb);
 //串口
 make_EHelper(in);
 make_EHelper(out);
+//coremark
+make_EHelper(cwtl);
