@@ -54,3 +54,6 @@ make_EHelper(call_rm);
 make_EHelper(shr);
 //sub-longlong.c
 make_EHelper(sbb);
+//串口
+make_EHelper(in);
+make_EHelper(out);
