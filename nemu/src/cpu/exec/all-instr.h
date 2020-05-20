@@ -63,3 +63,7 @@ make_EHelper(cwtl);
 //microbench
 make_EHelper(neg);
 make_EHelper(rol);
+
+//PA3
+//第一阶段
+make_EHelper(lidt);
