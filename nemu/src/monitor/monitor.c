@@ -85,6 +85,8 @@ static inline void restart() {
   //进行eflags的初始化
   unsigned int origin=2;
   memcpy(&cpu.eflags,&origin,sizeof(cpu.eflags));
+  //进行cs寄存器的初始化
+  cpu.cs=8;
 
 #ifdef DIFF_TEST
   init_qemu_reg();

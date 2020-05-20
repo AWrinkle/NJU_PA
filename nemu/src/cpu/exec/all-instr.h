@@ -67,3 +67,4 @@ make_EHelper(rol);
 //PA3
 //第一阶段
 make_EHelper(lidt);
+make_EHelper(int);

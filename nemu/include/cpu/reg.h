@@ -46,11 +46,13 @@ typedef struct {
        unsigned int OF:1;
        unsigned int :20;
    } eflags;
- //实现IDTR寄存器
+  //实现IDTR寄存器
   struct IDTR{
     uint32_t base;
     uint16_t limit;
   } idtr;
+  //实现CS寄存器
+  rtlreg_t cs;
 
 } CPU_state;
 
