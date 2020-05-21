@@ -68,3 +68,4 @@ make_EHelper(rol);
 //第一阶段
 make_EHelper(lidt);
 make_EHelper(int);
+make_EHelper(pusha);
