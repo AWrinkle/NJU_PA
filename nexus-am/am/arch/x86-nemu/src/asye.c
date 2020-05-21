@@ -28,9 +28,9 @@ static GateDesc idt[NR_IRQ];
 
 void _asye_init(_RegSet*(*h)(_Event, _RegSet*)) {
   // initialize IDT
- // for (unsigned int i = 0; i < NR_IRQ; i ++) {
- //   idt[i] = GATE(STS_TG32, KSEL(SEG_KCODE), vecnull, DPL_KERN);
- // }
+  for (unsigned int i = 0; i < NR_IRQ; i ++) {
+    idt[i] = GATE(STS_TG32, KSEL(SEG_KCODE), vecnull, DPL_KERN);
+  }
 
   // -------------------- system call --------------------------
   idt[0x80] = GATE(STS_TG32, KSEL(SEG_KCODE), vecsys, DPL_USER);
