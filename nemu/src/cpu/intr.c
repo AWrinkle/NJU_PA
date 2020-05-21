@@ -16,6 +16,9 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
   rtl_push(&t0);
   //从IDTR中读出IDT的首地址
   vaddr_t gate_addr=cpu.idtr.base+NO*sizeof(GateDesc);
+  printf("idtr.base=0x%x",cpu.idtr.base);
+  printf("idtr.limit=0x%x",cpu.idtr.limit);
+  printf("gate_addr=0x%x",gate_addr);
   assert(gate_addr<=cpu.idtr.base+cpu.idtr.limit);
   //根据异常（中断）号在IDT中进行索引，找到一个门描述符
   //将门描述符中的offset域组合成目标地址
