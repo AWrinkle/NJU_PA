@@ -15,6 +15,10 @@ make_EHelper(lidt) {
   rtl_lm(&t0,&t1,4);
   cpu.idtr.base=t0;
 
+#ifdef DEBUG
+  Log("idtr.limit=0x%x",cpu.idtr.limit);
+  Log("idtr.base=0x%x",cpu.idtr.limit);
+#endif
   print_asm_template1(lidt);
 }
 
