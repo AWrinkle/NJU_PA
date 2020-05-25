@@ -25,6 +25,12 @@ static Finfo file_table[] __attribute__((used)) = {
 
 #define NR_FILES (sizeof(file_table) / sizeof(file_table[0]))
 
+void init_fs() {
+  // TODO: initialize the size of /dev/fb
+  file_table[FD_FB].size = _screen.height * _screen.width * 4;
+}
+
+
 /*辅助函数*/
 size_t fs_filesz(int fd)
 {
@@ -86,6 +92,3 @@ int fs_close(int fd)
   return 0;
 }
 
-void init_fs() {
-  // TODO: initialize the size of /dev/fb
-}
