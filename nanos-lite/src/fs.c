@@ -3,6 +3,7 @@
 typedef struct {
   char *name;
   size_t size;
+  off_t disk_offset;
   off_t open_offset;
 } Finfo;
 
@@ -34,7 +35,7 @@ size_t fs_filesz(int fd)
 off_t disk_offset(int fd)
 {
   assert(fd>=0 && fd<NR_FILES);
-  return file_table[fd].open_offset;
+  return file_table[fd].disk_offset;
 }
 
 off_t get_open_offset(int fd)
