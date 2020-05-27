@@ -21,6 +21,13 @@ _Screen _screen = {
   .height = 300,
 };
 
+//辅助函数，返回屏幕大小信息
+void getScreen(int* width,int* height)
+{
+  *width=_screen.width;
+  *height=_screen.height;
+}
+
 extern void* memcpy(void *, const void *, int);
 
 void _draw_rect(const uint32_t *pixels, int x, int y, int w, int h) {
