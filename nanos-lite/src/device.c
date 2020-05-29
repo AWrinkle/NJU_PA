@@ -43,22 +43,17 @@ void fb_write(const void *buf, off_t offset, size_t len) {
   int index,screen_x1,screen_y1,screen_y2;
   int width=0,height=0;
   getScreen(&width,&height);
-  
   index=offset/4;
   screen_y1=index/width;
   screen_x1=index%width;
-  
   index=(offset+len)/4;
   screen_y2=index/width;
-  
   assert(screen_y2>=screen_y1);
-  
   if(screen_y2==screen_y1)
   {
     _draw_rect(buf,screen_x1,screen_y1,len/4,1);
     return;
   }
-  
   int tempw=width-screen_x1;
   if(screen_y2-screen_y1==1)
   {
@@ -66,24 +61,10 @@ void fb_write(const void *buf, off_t offset, size_t len) {
     _draw_rect(buf+tempw*4,0,screen_y2,len/4-tempw,1);
     return;
   }
-  
   _draw_rect(buf,screen_x1,screen_y1,tempw,1);
   int tempy=screen_y2-screen_y1-1;
   _draw_rect(buf+tempw*4,0,screen_y1+1,width,tempy);
   _draw_rect(buf+tempw*4+tempy*width*4,0,screen_y2,len/4-tempw-tempy*width,1);
-  /*
-  int index,screen_x,screen_y;
-  int width=0,height=0;
-  getScreen(&width,&height);
-  
-  for(int i=0;i<len/4;i++)
-  {
-    index=offset/4+i;
-    screen_y=index/width;
-    screen_x=index&width;
-    _draw_rect(buf+i*4,screen_x,screen_y,1,1);
-  }
-  */
 }
 
 
