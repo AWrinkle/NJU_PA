@@ -31,7 +31,7 @@ void paddr_write(paddr_t addr, int len, uint32_t data) {
            mmio_write(addr,len,data,r);
 }
 
-/*
+
 paddr_t page_translate(vaddr_t addr,bool is_write)
 {
   PDE pde, *pgdir;
@@ -39,7 +39,7 @@ paddr_t page_translate(vaddr_t addr,bool is_write)
   paddr_t paddr=addr;
   if (cpu.cr0.protect_enable && cpu.cr0.paging) 
   {
-    pgdir=(PDE*)(intprt_t)(cpu.cr3.page_directory_base<<12);
+    pgdir=(PDE*)(intptr_t)(cpu.cr3.page_directory_base<<12);
     pde.val=paddr_read((intptr_t)&pgdir[(addr>>22)&0x3ff],4);
     assert(pde.present);
     pde.accessed=1;
@@ -54,19 +54,57 @@ paddr_t page_translate(vaddr_t addr,bool is_write)
   return paddr;
 }
 
+bool is_cross_boundry(vaddr_t addr,int len)
+{
+  bool result;
+  result=(((addr+len-1)&~PAGE_MASK)!=(addr&~PAGE_MASK))?true:false;
+  return result;
+}
 
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
+  paddr_t paddr;
+  if(is_cross_boundry(addr,len))
+  {
+     union{
+        uint8_t bytes[4];
+        uint32_t dword;
+     }data={0};
+     for(int i=0;i<len;i++)
+     {
+        paddr=page_translate(addr+i,false);
+        data.bytes[i]=paddr_read(paddr,1);
+     }
+     return data.dword;
+  }
+  else{
+     paddr=page_translate(addr,false);
+     return paddr_read(paddr,len);
+  }
 
-  return paddr_read(addr, len);
+  //return paddr_read(addr, len);
 }
 
 void vaddr_write(vaddr_t addr, int len, uint32_t data) {
-  paddr_write(addr, len, data);
+  //paddr_write(addr, len, data);
+  paddr_t paddr;
+  if(is_cross_boundry(addr,len))
+  {
+     for(int i=0;i<len;i++)
+     {
+        paddr=page_translate(addr+i,true);
+        paddr_write(paddr,1,data);
+        data>>=8;
+     }
+  }
+  else
+  {
+     paddr=page_translate(addr,true);
+     return paddr_write(paddr,len,data);
+  }
 }
-*/
 
-
+/*
 // 从x86.h里抄过来的
 // +--------10------+-------10-------+---------12----------+
 // | Page Directory |   Page Table   | Offset within Page  |
@@ -131,4 +169,4 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
     paddr_write(paddr, len, data);
   }
 }
-
+*/
