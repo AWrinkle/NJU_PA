@@ -35,7 +35,7 @@ void paddr_write(paddr_t addr, int len, uint32_t data) {
 
 
 
-
+/*
 
 paddr_t page_translate(vaddr_t addr,bool is_write)
 {
@@ -110,7 +110,9 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
   }
 }
 
-/*
+*/
+
+
 // 从x86.h里抄过来的
 // +--------10------+-------10-------+---------12----------+
 // | Page Directory |   Page Table   | Offset within Page  |
@@ -175,4 +177,4 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
     paddr_write(paddr, len, data);
   }
 }
-*/
+
