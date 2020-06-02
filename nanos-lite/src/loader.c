@@ -7,7 +7,7 @@ extern void _map(_Protect *p,void *va,void *pa);
 extern void* new_page(void);
 //extern uint8_t ramdisk_start;
 //extern uint8_t ramdisk_end;
-#define DEFAULT_ENTRY ((void *)0x400000)
+#define DEFAULT_ENTRY ((void *)0x8048000)
 
 uintptr_t loader(_Protect *as, const char *filename) {
   //TODO();
