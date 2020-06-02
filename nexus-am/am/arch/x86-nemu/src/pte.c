@@ -16,7 +16,7 @@ _Area segments[] = {      // Kernel memory mappings
 void _pte_init(void* (*palloc)(), void (*pfree)(void*)) {
   palloc_f = palloc;
   pfree_f = pfree;
-  
+ 
   int i;
 
   // make all PDEs invalid
@@ -48,7 +48,7 @@ void _pte_init(void* (*palloc)(), void (*pfree)(void*)) {
 
 void _protect(_Protect *p) {
   PDE *updir = (PDE*)(palloc_f());
-  
+
   p->ptr = updir;
   // map kernel space
   for (int i = 0; i < NR_PDE; i ++) {
