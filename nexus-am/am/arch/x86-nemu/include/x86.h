@@ -52,7 +52,7 @@
 #ifndef __ASSEMBLER__
 
 #include <arch.h>
-
+#include <stdio.h>
 // +--------10------+-------10-------+---------12----------+
 // | Page Directory |   Page Table   | Offset within Page  |
 // |      Index     |      Index     |                     |

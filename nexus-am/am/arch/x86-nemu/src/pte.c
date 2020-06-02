@@ -1,5 +1,4 @@
 #include <x86.h>
-#include<stdio.h>
 
 #define PG_ALIGN __attribute((aligned(PGSIZE)))
 
@@ -17,7 +16,7 @@ _Area segments[] = {      // Kernel memory mappings
 void _pte_init(void* (*palloc)(), void (*pfree)(void*)) {
   palloc_f = palloc;
   pfree_f = pfree;
-
+  
   int i;
 
   // make all PDEs invalid
