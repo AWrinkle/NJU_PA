@@ -124,7 +124,7 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
 #define OFF(va)     ((uint32_t)(va) & 0xfff)
 #define PTE_ADDR(pte)   ((uint32_t)(pte) & ~0xfff)
 paddr_t page_translate(vaddr_t addr, bool w1r0) {
-    Log("before:addr=%x",addr);
+    //Log("before:addr=%x",addr);
     //aka page_walk
     PDE pde, *pgdir;
     PTE pte, *pgtab;
@@ -142,8 +142,8 @@ paddr_t page_translate(vaddr_t addr, bool w1r0) {
 	    pte.dirty = w1r0 ? 1 : pte.dirty; //写则置脏位
 
 	    //pte高20位和线性地址低12位拼接成真实地址
-            Log("cr3=0x%x,cr0=0x%x",cpu.cr3.val,cpu.cr0.val);
-            Log("after=%x",PTE_ADDR(pte.val) | OFF(addr));
+            //Log("cr3=0x%x,cr0=0x%x",cpu.cr3.val,cpu.cr0.val);
+            //Log("after=%x",PTE_ADDR(pte.val) | OFF(addr));
 	    return PTE_ADDR(pte.val) | OFF(addr); 
 	}
     return addr;

@@ -38,8 +38,8 @@ make_EHelper(mov_cr2r) {
   if(id_src->reg==0)
     reg_l(id_dest->reg)=cpu.cr0.val;
   else if(id_src->reg==3)
-    //reg_l(id_dest->reg)=cpu.cr3.val;
-    operand_write(id_dest,&cpu.cr3.val);
+    reg_l(id_dest->reg)=cpu.cr3.val;
+  Log("cr3=0x%x,cr0=0x%x,id_dest=0x%x",cpu.cr3.val,cpu.cr0.val,reg_l(id_dest->reg));
   print_asm("movl %%cr%d,%%%s", id_src->reg, reg_name(id_dest->reg, 4));
 
 #ifdef DIFF_TEST
