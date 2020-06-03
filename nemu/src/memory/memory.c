@@ -175,7 +175,9 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
 	}
 	//assert(0);
   } else {
-    Log("111");
+    vaddr_t a=0x2cd9000;
+    paddr_t p=page_translate(a, true);
+    Log("0x%x",p);
     paddr_t paddr = page_translate(addr, true);
     paddr_write(paddr, len, data);
   }
