@@ -33,6 +33,7 @@ make_EHelper(mov_r2cr) {
   else if(id_dest->reg==3)
     {
     cpu.cr3.val=reg_l(id_src->reg);
+    Log("id_src=0x%x",reg_l(id_src->reg));
     Log("cr3,eip=0x%x",cpu.eip);
     //cpu.cr3.val=0x01d92000;
     }
