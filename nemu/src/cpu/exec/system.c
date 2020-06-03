@@ -30,7 +30,7 @@ make_EHelper(mov_r2cr) {
   else if(id_dest->reg==3)
     {
     cpu.cr3.val=reg_l(id_src->reg);
-    Log("eip=0x%x",reg_l(cpu.eip));
+    Log("eip=0x%x",cpu.eip);
     //cpu.cr3.val=0x01d92000;
     }
   print_asm("movl %%%s,%%cr%d", reg_name(id_src->reg, 4), id_dest->reg);
