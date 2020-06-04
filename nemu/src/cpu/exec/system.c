@@ -37,7 +37,7 @@ make_EHelper(mov_r2cr) {
     Log("cr3,eip=0x%x",cpu.eip);
     //cpu.cr3.val=0x01d92000;
     }
-  print_asm("mvl %%%s,%%cr%d", reg_name(id_src->reg, 4), id_dest->reg);
+  print_asm("movl %%%s,%%cr%d", reg_name(id_src->reg, 4), id_dest->reg);
 }
 
 make_EHelper(mov_cr2r) {
@@ -53,7 +53,7 @@ make_EHelper(mov_cr2r) {
     Log("cr3,eip=0x%x",cpu.eip);
     }
   //Log("cr3=0x%x,cr0=0x%x,id_dest=0x%x",cpu.cr3.val,cpu.cr0.val,reg_l(id_dest->reg));
-  print_asm("mvl %%cr%d,%%%s", id_src->reg, reg_name(id_dest->reg, 4));
+  print_asm("movl %%cr%d,%%%s", id_src->reg, reg_name(id_dest->reg, 4));
 
 #ifdef DIFF_TEST
   diff_test_skip_qemu();
