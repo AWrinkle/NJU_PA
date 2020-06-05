@@ -28,7 +28,7 @@ uintptr_t loader(_Protect *as, const char *filename) {
   {
     pa=new_page();
     _map(as,va,pa);
-    fs_read(fd,pa,(pa-va)<PGSIZE?(end-va):PGSIZE);
+    fs_read(fd,pa,PGSIZE);
   }
 
   return (uintptr_t)DEFAULT_ENTRY;
