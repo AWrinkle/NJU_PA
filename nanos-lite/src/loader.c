@@ -8,7 +8,7 @@ extern void* new_page(void);
 //extern uint8_t ramdisk_start;
 //extern uint8_t ramdisk_end;
 #define DEFAULT_ENTRY ((void *)0x8048000)
-/*
+
 uintptr_t loader(_Protect *as, const char *filename) {
   //TODO();
   //size_t size = get_ramdisk_size();
@@ -32,14 +32,14 @@ uintptr_t loader(_Protect *as, const char *filename) {
 
   return (uintptr_t)DEFAULT_ENTRY;
 }
-*/
+/*
 uintptr_t loader(_Protect *as, const char *filename) {
-  /*size_t size = get_ramdisk_size();
+  size_t size = get_ramdisk_size();
   void * buff = NULL;
   ramdisk_read(buff,0,size); 
   memcpy(DEFAULT_ENTRY,buff,size); //之前误用memset
   //后来才想起来，ramdisk_read已经memcpy了，上一句无用功
-  return (uintptr_t)DEFAULT_ENTRY;*/
+  return (uintptr_t)DEFAULT_ENTRY;
 
   int fd = fs_open(filename, 0, 0);
   int bytes = fs_filesz(fd); //出错在之前为size_t
@@ -59,3 +59,4 @@ uintptr_t loader(_Protect *as, const char *filename) {
   fs_close(fd);
   return (uintptr_t)DEFAULT_ENTRY;
 }
+*/
