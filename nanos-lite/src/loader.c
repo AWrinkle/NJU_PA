@@ -18,7 +18,7 @@ uintptr_t loader(_Protect *as, const char *filename) {
   //fs_read(fd,DEFAULT_ENTRY,fs_filesz(fd));
   //fs_close(fd);
    
-  size_t len=fs_filesz(fd);
+  int len=fs_filesz(fd);
   void* pa;
   void* va;
   Log("filename=%s,fd=%d,size:%d\n",filename,fd,len);
