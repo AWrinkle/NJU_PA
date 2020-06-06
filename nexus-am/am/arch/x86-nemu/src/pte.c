@@ -51,11 +51,10 @@ void _protect(_Protect *p) {
 
   p->ptr = updir;
   // map kernel space
-  /*
+  
   for (int i = 0; i < NR_PDE; i ++) {
     updir[i] = kpdirs[i];
   }
-  */
 
   p->area.start = (void*)0x8000000;
   p->area.end = (void*)0xc0000000;
