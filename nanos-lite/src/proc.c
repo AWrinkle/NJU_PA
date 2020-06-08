@@ -34,8 +34,16 @@ _RegSet* schedule(_RegSet *prev) {
   current->tf = prev;
    
   //current=&pcb[0];
-    
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  if(count<100)
+  {
+  current = &pcb[0];
+  count++;
+  }
+  else
+  {
+   current = &pcb[1];
+   count=0;
+  }
   printf("0:0x%x",current);
   //TODO: switch to the new address space,
   //then return the new context
