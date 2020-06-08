@@ -11,6 +11,7 @@ static _RegSet* do_event(_Event e, _RegSet* r) {
        return do_syscall(r);
     case _EVENT_TRAP: return schedule(r);
       //printf("receive an event trao!!!");break;
+    case _EVENT_IRQ_TIME:/*Log("_EVENT_IRQ_TIME!!");*/return schedule(r);
     default: panic("Unhandled event ID = %d", e.event);
   }
 
