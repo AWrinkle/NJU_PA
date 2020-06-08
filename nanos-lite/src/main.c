@@ -33,7 +33,7 @@ int main() {
 
   //uint32_t entry = loader(NULL, "/bin/pal");
   
-  load_prog("/bin/bmptest");
+  load_prog("/bin/pal");
   //((void (*)(void))entry)();
 
   panic("Should not reach here");
