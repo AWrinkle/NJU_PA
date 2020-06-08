@@ -5,6 +5,7 @@
 static PCB pcb[MAX_NR_PROC];
 static int nr_proc = 0;
 PCB *current = NULL;
+extern int current_game;
 
 uintptr_t loader(_Protect *as, const char *filename);
 
@@ -26,12 +27,21 @@ void load_prog(const char *filename) {
   pcb[i].tf = _umake(&pcb[i].as, stack, stack, (void *)entry, NULL, NULL);
 }
 
+int count = 0;
+
 _RegSet* schedule(_RegSet *prev) {
   //save the context pointer
-  current->tf = prev;
+    current->tf = prev;
 
-  current=&pcb[0];
- 
+  current = (current_game == 0 ? &pcb[0] : &pcb[2]);
+  count++;
+  if(count == 64){
+  	count = 0;
+  	current = &pcb[1];
+  }
+
+  //TODO: switch to the new address space,
+  //then return the new context
   _switch(&current->as);
   return current->tf;
 }

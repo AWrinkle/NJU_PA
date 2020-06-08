@@ -9,6 +9,7 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 extern void getScreen(int* p_width,int* p_height);
+int current_game = 0;
 
 size_t events_read(void *buf, size_t len) {
   char str[20];
