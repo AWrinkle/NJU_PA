@@ -33,13 +33,8 @@ _RegSet* schedule(_RegSet *prev) {
   //save the context pointer
     current->tf = prev;
 
-  current = (current_game == 0 ? &pcb[0] : &pcb[2]);
-  count++;
-  if(count == 64){
-  	count = 0;
-  	current = &pcb[1];
-  }
-
+  current = (current_game == 0 ? &pcb[1] : &pcb[0]);
+  
   //TODO: switch to the new address space,
   //then return the new context
   _switch(&current->as);
