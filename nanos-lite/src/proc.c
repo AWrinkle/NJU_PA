@@ -35,6 +35,7 @@ _RegSet* schedule(_RegSet *prev) {
 
   current = (current_game == 0 ? &pcb[0] : &pcb[2]);
   count++;
+  printf("%d ",count);
   if(count == 64){
   	count = 0;
   	current = &pcb[1];
