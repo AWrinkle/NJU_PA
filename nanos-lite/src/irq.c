@@ -5,7 +5,9 @@ extern _RegSet* do_syscall(_RegSet *r);
 extern _RegSet* schedule(_RegSet *prev);
 
 static _RegSet* do_event(_Event e, _RegSet* r) {
-  printf("%d",e.event);
+  printf("%d ",e.event);
+  printf("%d ",_EVENT_TRAP);
+  printf("%d ",_EVENT_ERROR);
   switch (e.event) {
     case _EVENT_SYSCALL:
        return do_syscall(r);
