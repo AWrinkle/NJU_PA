@@ -33,7 +33,7 @@ _RegSet* schedule(_RegSet *prev) {
   //save the context pointer
   current->tf = prev;
    
-  current=&pcb[0];
+  //current=&pcb[0];
   
   current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   //TODO: switch to the new address space,
