@@ -1,7 +1,7 @@
 #include "common.h"
 #include "syscall.h"
 #include "fs.h"
-
+extern int mm_brk(uint32_t new_brk);
 
 static inline _RegSet* sys_none(_RegSet *r){
   SYSCALL_ARG1(r) = 1; //约定系统调用返回值存于此，即eax
@@ -34,9 +34,13 @@ int sys_write(int fd,void* buf,size_t len)
   return -1;
 }
 
-int sys_brk(int addr)
-{
-  return 0;
+static inline _RegSet* sys_brk(_RegSet *r) {
+  //pa3 总是返回0，表示堆区大小总是调整成功
+  //Log("!");
+  //SYSCALL_ARG1(r) = 0;
+  //pa4.1 真正的调整堆区
+  SYSCALL_ARG1(r) = mm_brk(SYSCALL_ARG2(r));
+  return NULL;
 }
 
 int sys_open(const char* filename)
@@ -75,8 +79,7 @@ _RegSet* do_syscall(_RegSet *r) {
       SYSCALL_ARG1(r)=sys_write(a[1],(void*)a[2],a[3]);
       break;
     case SYS_brk:
-      SYSCALL_ARG1(r)=sys_brk(a[1]);
-      break;
+      return sys_brk(r);
     case SYS_open:
       SYSCALL_ARG1(r)=sys_open((char*)a[1]);
       break;
