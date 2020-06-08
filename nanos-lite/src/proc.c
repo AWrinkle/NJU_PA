@@ -34,7 +34,7 @@ _RegSet* schedule(_RegSet *prev) {
   current->tf = prev;
    
   //current=&pcb[0];
-  if(count<200)
+  if(count<400)
   {
   current = &pcb[0];
   count++;
