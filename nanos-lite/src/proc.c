@@ -5,7 +5,13 @@
 static PCB pcb[MAX_NR_PROC];
 static int nr_proc = 0;
 PCB *current = NULL;
-extern int current_game;
+
+int current_game=0;
+void switch_current_game()
+{
+   current_game=2-current_game;
+   Log("current_game=%d",current_game);
+}
 
 uintptr_t loader(_Protect *as, const char *filename);
 
@@ -31,11 +37,13 @@ int count = 0;
 
 _RegSet* schedule(_RegSet *prev) {
   //save the context pointer
-  current->tf = prev;
-   
+  if(current!=NULL)
+    current->tf = prev;
+  else
+    current=&pcb[current_game];
   if(count<400)
   {
-  current = &pcb[0];
+  current = &pcb[current_game];
   count++;
   }
   else
