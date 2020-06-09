@@ -1,6 +1,6 @@
 #include "cpu/exec.h"
 #include "all-instr.h"
-#define TIME_IRQ 32
+
 
 
 typedef struct {
@@ -255,6 +255,7 @@ void exec_wrapper(bool print_flag) {
   difftest_step(eip);
 #endif
 
+#define TIME_IRQ 32
   if(cpu.INTR & cpu.eflags.IF)
   {
      cpu.INTR=false;
