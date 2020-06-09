@@ -26,7 +26,7 @@ size_t events_read(void *buf, size_t len) {
   else
   {
     sprintf(str,"t %d\n",_uptime());
-    if(down && key==_KEY_F12)
+    if(down && key==13)
     {
       extern void switch_current_game();
       switch_current_game();
