@@ -11,6 +11,7 @@ static const char *keyname[256] __attribute__((used)) = {
 extern void getScreen(int* p_width,int* p_height);
 
 
+
 size_t events_read(void *buf, size_t len) {
   char str[20];
   bool down=false;
@@ -26,7 +27,7 @@ size_t events_read(void *buf, size_t len) {
   else
   {
     sprintf(str,"t %d\n",_uptime());
-    if(down && key==13)
+    if( key==_KEY_F12)
     {
       extern void switch_current_game();
       switch_current_game();
