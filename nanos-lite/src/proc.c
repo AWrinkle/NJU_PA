@@ -33,8 +33,6 @@ _RegSet* schedule(_RegSet *prev) {
   //save the context pointer
   current->tf = prev;
    
-  current=&pcb[0];
-  /*
   if(count<400)
   {
   current = &pcb[0];
@@ -45,7 +43,6 @@ _RegSet* schedule(_RegSet *prev) {
    current = &pcb[1];
    count=0;
   }
-  */
   //TODO: switch to the new address space,
   //then return the new context
   _switch(&current->as);
