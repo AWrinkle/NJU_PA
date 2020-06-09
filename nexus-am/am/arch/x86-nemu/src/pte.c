@@ -92,7 +92,7 @@ _RegSet *_umake(_Protect *p, _Area ustack, _Area kstack, void *entry, char *cons
   	 ptr--;
   }
   //陷阱帧，包括栈帧的8个通用寄存器
-  *ptr = 0x202; 	  ptr--; //eflags,即IF置1即可
+  *ptr = 0x02 | FL_IF; 	  ptr--; //eflags,即IF置1即可
   *ptr = 0x8; 	          ptr--; //cs 为了diff test
   *ptr = (uint32_t)entry; ptr--; //eip
   *ptr = 0x0;             ptr--; //error code
