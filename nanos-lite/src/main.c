@@ -32,7 +32,7 @@ int main() {
   init_fs();
 
   //uint32_t entry = loader(NULL, "/bin/pal");
-  load_prog("/bin/eventstest");
+  load_prog("/bin/events");
   //load_prog("/bin/hello");
   //load_prog("/bin/videotest");
   
